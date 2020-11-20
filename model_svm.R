@@ -34,7 +34,7 @@ mod_string = "model
 }"
 
 
-dat = read.csv("bitcoin.csv")
+dat = read.csv("bitcoin_train.csv")
 
 y = dat$log_return
 ##### get initial estimates #####
@@ -69,10 +69,11 @@ nthin = 20
 stochVol_ARMA.coda = coda.samples(stochVol_ARMA11, c("mu", "beta0",
  "phi", "theta", "tau_v", "nu", "tau"), 100 * nthin, thin = nthin)
 summ_stochVol_ARMA11 = summary(stochVol_ARMA.coda)
-# summ_stochVol_ARMA11
+summ_stochVol_ARMA11
 head(summ_stochVol_ARMA11[[1]], 8)
 tail(summ_stochVol_ARMA11[[1]], 8)
 dic.stochVol_ARMA11 = dic.samples(stochVol_ARMA11, 100 * nthin,
 thin = nthin, type = "pD")
 dic.stochVol_ARMA11
-  
+effectiveSize(stochVol_ARMA.coda)
+
