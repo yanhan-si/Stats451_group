@@ -65,6 +65,6 @@ bitcoin_train = bitcoin[1:n_train, ]
 bitcoin_test = bitcoin[(n_train+1):nrow(bitcoin), ]
 
 # write output
-write_csv(bitcoin, "bitcoin.csv")
-write_csv(bitcoin_train, "bitcoin_train.csv")
-write_csv(bitcoin_test, "bitcoin_test.csv")
+write_csv(bitcoin, "./data/bitcoin.csv")
+write_csv(bitcoin_train, "./data/bitcoin_train.csv")
+write_csv(bitcoin_test, "./data/bitcoin_test.csv")

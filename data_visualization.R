@@ -7,8 +7,8 @@
 library(tidyverse)
 library(ggplot2)
 # read data
-directory = "./archive/"
-bitcoin = read_csv("bitcoin.csv")
+
+bitcoin = read_csv("./data/bitcoin.csv")
 names(bitcoin)
 bitcoin %>% 
   ggplot(aes(x = Date, y = Close)) +

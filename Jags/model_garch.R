@@ -25,26 +25,26 @@ mod_string = "model
   beta1 ~ dunif(0.00001, 0.8)
   nu ~ dunif(1,30)
 }"
-
-dat = read.csv("bitcoin_train.csv")
-y = dat$log_return
-N = length(y)
-data=list(y=y,N=N)
-inits_garch11 = function(){list(alpha0 = runif(1, 0.001, 0.25),
+  
+  dat = read.csv("./data/bitcoin_train.csv")
+  y = dat$log_return
+  N = length(y)
+  data=list(y=y,N=N)
+  inits_garch11 = function(){list(alpha0 = runif(1, 0.001, 0.25),
                                   beta1 = runif(1, 0.001, 0.25),
-                                mu = runif(1, 0.001, 0.25),
+                                  mu = runif(1, 0.001, 0.25),
                                   alpha1 = runif(1, 0.001, 0.25), 
-                                nu = runif(1, 2, 10))}
-garch11 <- jags.model(textConnection(mod_string), data=data,
+                                  nu = runif(1, 2, 10))}
+  garch11 <- jags.model(textConnection(mod_string), data=data,
                         inits = inits_garch11,
-                         n.chains = 3, n.adapt = 1000, quiet = FALSE)
-nthin = 20
-garch11.coda = coda.samples(garch11,c("mu", "beta1", "alpha0",
-                                          "alpha1", "nu", "tau"), 100*nthin, thin = nthin)
-dic.garch11 = dic.samples(garch11, 100*nthin, thin = nthin)
-dic.garch11
-diffdic(dic.garch11, dic.stochVol_ARMA11)
-summ_garch11 = summary(garch11.coda)
-head(summ_garch11[[1]])
-tail(summ_garch11[[1]])
-
+                        n.chains = 3, n.adapt = 1000, quiet = FALSE)
+  nthin = 20
+  garch11.coda = coda.samples(garch11,c("mu", "beta1", "alpha0",
+                                        "alpha1", "nu", "tau"), 100*nthin, thin = nthin)
+  dic.garch11 = dic.samples(garch11, 100*nthin, thin = nthin)
+  dic.garch11
+  diffdic(dic.garch11, dic.stochVol_ARMA11)
+  summ_garch11 = summary(garch11.coda)
+  head(summ_garch11[[1]])
+  tail(summ_garch11[[1]])
+  

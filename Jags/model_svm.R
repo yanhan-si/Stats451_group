@@ -34,7 +34,7 @@ mod_string = "model
 }"
 
 
-dat = read.csv("bitcoin_train.csv")
+dat = read.csv("./data/bitcoin_train.csv")
 
 y = dat$log_return
 ##### get initial estimates #####
@@ -52,7 +52,7 @@ tauInit = 1/sfitar$sigma^2
 
 ##### Set up for MCMC #####
 N = length(y)
-data=list(y=y,N=N)
+data=list(y=y,N=N) # create our data used in our model
 inits_stochVol_ARMA11 = function(){list(mu = rnorm(1, mean = mean(y),
  sd = sd(y) / sqrt(N)), logh = log(y^2+1e-6),
  beta0 = runif(1, beta0Init * 1.5, beta0Init/1.5),
@@ -65,13 +65,15 @@ stochVol_ARMA11 <- jags.model(textConnection(mod_string), data = data,
  n.chains = 3, n.adapt = 1000, quiet = FALSE)
 
 nthin = 20
-
+# generate the posterior samples
 stochVol_ARMA.coda = coda.samples(stochVol_ARMA11, c("mu", "beta0",
  "phi", "theta", "tau_v", "nu", "tau"), 100 * nthin, thin = nthin)
+plot(stochVol_ARMA.coda)
 summ_stochVol_ARMA11 = summary(stochVol_ARMA.coda)
 summ_stochVol_ARMA11
 head(summ_stochVol_ARMA11[[1]], 8)
 tail(summ_stochVol_ARMA11[[1]], 8)
+# compute DIC
 dic.stochVol_ARMA11 = dic.samples(stochVol_ARMA11, 100 * nthin,
 thin = nthin, type = "pD")
 dic.stochVol_ARMA11
