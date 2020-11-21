@@ -9,3 +9,6 @@ garch11 <- rstan::sampling(garch11_setup, data = stan_data)
 
 garch11_fit <- rstan::extract(garch11, permuted = TRUE)
 
+plot(garch11_fit$alpha1, type = "l")
+plot(garch11_fit$mu, type = "l")
+
