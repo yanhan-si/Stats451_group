@@ -59,10 +59,10 @@ ggplot(data = bitcoin, mapping = aes(x = bitcoin$Date, y = bitcoin$Close)) +
 ## so we decide to cut it off at year 2017.
 bitcoin = bitcoin %>% filter(Date >= '2017-01-01') %>% arrange(Date)
 
-# split the train (80%) and test (20%) dataset
-n_train = ceiling(0.8*nrow(bitcoin))
-bitcoin_train = bitcoin[1:n_train, ]
-bitcoin_test = bitcoin[(n_train+1):nrow(bitcoin), ]
+# split the train and test (last one week) dataset
+n_row = nrow(bitcoin)
+bitcoin_test = bitcoin[(n_row-6):n_row, ]
+bitcoin_train = bitcoin[1:(n_row-7), ]
 
 # write output
 write_csv(bitcoin, "./data/bitcoin.csv")
