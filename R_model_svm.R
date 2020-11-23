@@ -19,6 +19,7 @@ p2
 svm_fit <- rstan::extract(svm, permuted = TRUE)
 
 plot(svm_fit$mu_r, type = "l")
+mean(svm_fit$mu_r)
 
 # Updates needed for computing the log likelihood
 # log_lik_1 <- extract_log_lik(garch11, merge_chains = FALSE)

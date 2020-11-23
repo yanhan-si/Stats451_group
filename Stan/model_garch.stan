@@ -12,8 +12,10 @@
 // The input data is a vector 'y' of length 'N'.
 data {
   int<lower=0> N;
+  int<lower=0> J;
   real y[N];
   real<lower=0> sigma1;
+  real y_test[J];
 }
 parameters {
   real mu;
@@ -35,4 +37,7 @@ model {
 
 generated quantities {
   real y_rep[N] = normal_rng(mu, sigma);
+  real log_lik[N];
+  for (i in 1:N) {log_lik[i] = normal_lpdf(y[i] | mu, sigma[N]);}
+  
 }
