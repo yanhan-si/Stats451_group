@@ -21,9 +21,9 @@ svm_fit <- rstan::extract(svm, permuted = TRUE)
 plot(svm_fit$mu_r, type = "l")
 mean(svm_fit$mu_r)
 
-# Updates needed for computing the log likelihood
-# log_lik_1 <- extract_log_lik(garch11, merge_chains = FALSE)
-# r_eff_1 <- relative_eff(exp(log_lik_1), cores = 2)
-# loo_1 <- loo(log_lik_1, r_eff = r_eff_1, cores = 2)
-# print(loo_1)
-# plot(loo_1, main = "PSIS diagnostic plot( Seperate model )")
+#  computing the log likelihood
+log_lik <- extract_log_lik(svm, merge_chains = FALSE)
+r_eff <- relative_eff(exp(log_lik), cores = 2)
+loo <- loo(log_lik, r_eff = r_eff, cores = 2)
+print(loo)
+plot(loo, main = "Stochastic Volatility Model PSIS diagnostic plot")

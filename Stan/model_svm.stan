@@ -31,3 +31,7 @@ model {
     y[t] ~ normal(mu_r, exp(h[t] / 2));
 }
 
+generated quantities {
+  real log_lik[N];
+  for (i in 1:N) {log_lik[i] = normal_lpdf(y[i] | mu_r,exp(h[i] / 2));}
+}
