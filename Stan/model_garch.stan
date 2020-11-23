@@ -33,3 +33,6 @@ model {
   y ~ normal(mu, sigma);
 }
 
+generated quantities {
+  real y_rep[N] = normal_rng(mu, sigma);
+}

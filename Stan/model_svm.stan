@@ -8,13 +8,13 @@
 //    http://mc-stan.org/users/interfaces/rstan.html
 //    https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
 //
-
 // The input data is a vector 'y' of length 'N'.
 data {
   int<lower=0> N;   // # time points (equally spaced)
   vector[N] y;      // mean corrected return at time t
 }
 parameters {
+  real mu_r;                   // mean log return 
   real mu;                     // mean log volatility
   real<lower=-1,upper=1> phi;  // persistence of volatility
   real<lower=0> sigma;         // white noise shock scale
@@ -28,6 +28,6 @@ model {
   for (t in 2:N)
     h[t] ~ normal(mu + phi * (h[t - 1] -  mu), sigma);
   for (t in 1:N)
-    y[t] ~ normal(0, exp(h[t] / 2));
+    y[t] ~ normal(mu_r, exp(h[t] / 2));
 }
 

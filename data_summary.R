@@ -8,7 +8,8 @@ library(fBasics)
 
 bitcoin = read_csv("./data/bitcoin.csv")
 logR = bitcoin$log_return
-
+R = bitcoin$ret
+summary(R)
 summary(logR)
 sd(logR)
 skewness(logR)
