@@ -39,8 +39,8 @@ plot_df = tibble(date = as.Date(test$Date), y_pred = y_pred_price, y_true = y_tr
 ggplot() +
   geom_line(data = plot_df, aes(x = date, y = y_true), color = "blue") +
   geom_line(data = plot_df, aes(x = date, y = y_pred), color = "red") +
-  xlab('Dates') +
-  ylab('price') +
+  xlab('Date') +
+  ylab('Price (dollars)') +
   ggtitle("Bitcoin Closing Price") + theme_bw()
 ## 
 mean(garch11_fit$mu)
