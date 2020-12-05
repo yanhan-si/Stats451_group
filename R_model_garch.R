@@ -7,7 +7,7 @@ y = dat$log_return
 N = length(y)
 y_test = test$log_return
 J = length(y_test)
-stan_data <- list(y = y,N = N,sigma1 = 0.01, J = J, y_test = y_test)
+stan_data <- list(N = N,  J = J, y = y,sigma1 = 0.01, y_test = y_test)
 
 garch11 <- rstan::sampling(garch11_setup, data = stan_data)
 p1 = stan_plot(garch11, pars = c("mu", "alpha0", "alpha1", "beta1")) +
