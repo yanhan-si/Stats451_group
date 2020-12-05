@@ -37,5 +37,5 @@ plot_df %>% pivot_longer(
     geom_line() + 
     xlab('Date') +
     ylab('Price (dollars)') +
-    ggtitle("Bitcoin Closing Price") + 
+    ggtitle("Bitcoin Daily Price") + 
     theme_bw()
