@@ -36,6 +36,9 @@ y_pred_price = exp(y_pred_log_price)
 y_true_price = test$Close
 # plot the predicion
 plot_df = tibble(date = as.Date(test$Date), y_pred = y_pred_price, y_true = y_true_price)
+# save the prediction to csv files
+write.csv(plot_df,"./data/GARCH11_pred_price.csv", row.names = FALSE)
+
 ggplot() +
   geom_line(data = plot_df, aes(x = date, y = y_true), color = "blue") +
   geom_line(data = plot_df, aes(x = date, y = y_pred), color = "red") +
