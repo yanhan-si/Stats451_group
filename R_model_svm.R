@@ -2,9 +2,15 @@ library(loo)
 library(rstan)
 svm_setup <- rstan::stan_model(file = './Stan/model_svm.stan')
 dat = read.csv("./data/bitcoin_train.csv")
+test = read.csv("./data/bitcoin_test.csv")
 y = dat$log_return
 N = length(y)
-stan_data <- list(y = y,N = N)
+
+
+y_test = test$log_return
+J = length(y_test)
+
+stan_data <- list(y = y,N = N, J =J)
 
 svm <- rstan::sampling(svm_setup, data = stan_data, iter = 4000)
 
@@ -17,7 +23,7 @@ p2
 
 
 svm_fit <- rstan::extract(svm, permuted = TRUE)
-
+# svm_fit$ypred
 plot(svm_fit$mu_r, type = "l")
 mean(svm_fit$mu_r)
 
