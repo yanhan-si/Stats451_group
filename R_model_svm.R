@@ -5,6 +5,8 @@ dat = read.csv("./data/bitcoin_train.csv")
 test = read.csv("./data/bitcoin_test.csv")
 y = dat$log_return
 N = length(y)
+
+
 y_test = test$log_return
 J = length(y_test)
 
@@ -21,7 +23,6 @@ p2
 
 
 svm_fit <- rstan::extract(svm, permuted = TRUE)
-
 ## Calculate the predicted prices
 # get the posterior predicted log return
 y_pred = apply(svm_fit$ypred, 2, median)
