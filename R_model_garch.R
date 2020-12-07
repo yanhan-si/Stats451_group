@@ -20,16 +20,22 @@ p2 = stan_trace(garch11,
 p2
 garch11_fit <- rstan::extract(garch11, permuted = TRUE)
 
+# get the mean log return
+mean(garch11_fit$mu)
 
 ## Calculate the predicted prices
 # get the posterior predicted log return
 y_pred = apply(garch11_fit$ypred, 2, median)
+y_true_log_return = test$log_return
+# MSE of predicted log return 
+sum((y_pred-y_true_log_return)^2)/7
+
 
 # compute the predicted log price
 y_pred_log_price = rep(NA, 7)
 for (i in 1:7) {
   if (i == 1) {y_pred_log_price[i] = y_pred[i] + 9.059321}
-  else {y_pred_log_price[i] =  y_pred_log_return[i - 1] + y_pred[i] } 
+  else {y_pred_log_price[i] =  y_pred_log_price[i - 1] + y_pred[i] } 
 }
 # compute the predicted price
 y_pred_price = exp(y_pred_log_price)
@@ -53,3 +59,16 @@ r_eff <- relative_eff(exp(log_lik), cores = 2)
 loo <- loo(log_lik, r_eff = r_eff, cores = 2)
 print(loo)
 plot(loo, main = "GARCH PSIS diagnostic plot")
+
+
+# RMSE for the baseline model
+mean((y_true_log_return - 0.005)^2)
+# compute the predicted log price
+y_pred_log_price_b = rep(NA, 7)
+for (i in 1:7) {
+  y_pred_log_price_b[i] = 0.005 + 9.059321
+}
+y_pred_price_b= exp(y_pred_log_price_b)
+mean( (y_pred_price_b - y_true_price)^2 )
+
+
