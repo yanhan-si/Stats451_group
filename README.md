@@ -9,3 +9,6 @@ In this project, we performed Bayesian methods on a financial time series data s
 
 ![Price](/figures/overtime_price.png)
 
+## Report
+
+https://www.overleaf.com/read/wspjvbpxmkjr
